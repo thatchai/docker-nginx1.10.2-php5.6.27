@@ -1,0 +1,19 @@
+version: '2'
+services:
+  nginx:
+    build: ./build/nginx 
+    ports:
+     - 80:80
+    volumes:
+     - ./build/nginx/nginx.conf:/etc/nginx/nginx.conf
+     - ./build/nginx/conf:/etc/nginx/conf.d
+     - /d/www:/var/www/html
+     - ./tmp/log/nginx:/var/log/nginx
+    links:
+     - php_fpm:php
+
+  php_fpm:
+    build: ./build/php_fpm 
+    volumes:
+     - /d/www:/var/www/html
+     - ./tmp/log/php:/var/log/php
